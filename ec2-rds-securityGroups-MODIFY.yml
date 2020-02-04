@@ -30,8 +30,9 @@
 
       - name: create RDS instance
         rds:
-         command: create
-         subnet: my_rds_subnets 
+         command: modify
+#Parameter subnet should be present for command: create only, not for modify
+#         subnet: my_rds_subnets 
          instance_name: dbserver-1
          db_engine: MySQL
          size: 20
@@ -41,9 +42,10 @@
          region: ap-northeast-1
          backup_retention: 0
          multi_zone: no
-         tags:
-           Environment: testing
-           Application: cms
+#Parameter tags should be present for command: create only, not for modify
+#         tags:
+#           Environment: testing
+#           Application: cms
         register: group
 
       - name: create ec2 instance
