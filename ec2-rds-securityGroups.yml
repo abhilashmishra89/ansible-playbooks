@@ -27,18 +27,6 @@
             - subnet-0b639e9b3ae135332
 
 
-      - name: create ec2 instance
-        ec2:
-          image: ami-079e6fb1e856e80c1
-          vpc_subnet_id: subnet-067f61b01c7d123f3
-          wait: yes
-          instance_type: t2.micro
-#          group_id:  "{{ group.group_id }}"
-          region: ap-northeast-1
-          count_tag:
-            Name: appserver
-          exact_count: 1
-        register: ec2
 
       - name: create RDS instance
         rds:
@@ -58,5 +46,17 @@
            Application: cms
         register: group
 
+      - name: create ec2 instance
+        ec2:
+          image: ami-079e6fb1e856e80c1
+          vpc_subnet_id: subnet-067f61b01c7d123f3
+          wait: yes
+          instance_type: t2.micro
+#          group_id:  "{{ group.group_id }}"
+          region: ap-northeast-1
+          count_tag:
+            Name: appserver
+          exact_count: 1
+        register: ec2
 
 
