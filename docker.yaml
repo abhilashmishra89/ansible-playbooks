@@ -1,0 +1,33 @@
+---
+- name: Task-P1 docker login
+  hosts: localhost
+  tasks:
+    - name: Task-P1-C1 docker login
+      docker_login:
+        username: abhilashmishra89
+        password: my_insecure_password
+
+- name: Task-P2 pull base image
+  hosts: localhost
+  tasks:
+    - name: Task-P1-C2
+      docker_image:
+        name: abhilashmishra89/my_image:1.0.2
+        # source: pull
+
+- name: Task-P3
+  hosts: localhost
+  tasks:
+    - name: Task-P3-C3
+      docker_image:
+        name: abhilashmishra89/my_image:1.0.2
+        source: local
+        repository: abhilashmishra89/my_image:dev
+        push: yes
+
+- name: Task-P4 docker-logout
+  hosts: localhost
+  tasks:
+    - name: Task-P4-C4 docker-logout
+      docker_login:
+        state: absent

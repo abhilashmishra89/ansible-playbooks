@@ -1,0 +1,34 @@
+---
+- name: Stopping AppServer before backup
+  hosts: oa
+  become: no
+  tasks:
+    - name: ameyoctl service appserver faststop
+      command: "ameyoctl service appserver faststop"
+
+- name: Taking db backup(date_time wise files)
+  hosts: oa
+  become: no
+  tasks:
+    - name: Block-1 take DB backup
+      postgresql_db:
+        name: ameyodb
+        state: dump
+        target: /home/dbbackup/{{ansible_date_time.date}}-{{ansible_date_time.time}}.sql.gz
+    - name: Block-2 vaccum
+      postgresql_query:
+        db: ameyodb
+        query: VACUUM FULL
+        autocommit: yes
+    - name: Block-3 reindex ameyodb
+      postgresql_query:
+        db: ameyodb
+        query: reindex DATABASE ameyodb
+        autocommit: yes
+
+- name: Starting the AppServer again after backup completion
+  hosts: oa
+  become: no
+  tasks:
+    - name: ameyoctl service appserver start
+      command: "ameyoctl service appserver start"
