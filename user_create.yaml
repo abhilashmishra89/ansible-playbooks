@@ -1,0 +1,14 @@
+- name: create user
+  hosts: localhost
+  tasks:
+    - name: create user
+      user:
+        name: abhilashmishra
+        shell: /bin/bash
+        state: present
+        password: $6$geWZ0RYuoMGe.GqN$3xjCm9F3AHqkVmKPIf5T6GIeR09EPFugoTNp1wLmnqbYJQRuY7Saaw8GMv2nGFtAM0FE1svrdqosCUSbRpA13.
+        group: root
+      register: user
+    - name: debug message
+      debug:
+        msg: '{{user.password}}'
