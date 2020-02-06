@@ -1,0 +1,13 @@
+---
+- name: stop my jenkins server on aws
+  hosts: localhost
+  tasks:
+  - name: stop aws instance
+    ec2:
+      instance_ids:
+      - 'i-0d06fcd37e5c0137b'
+      state: stopped
+      region: ap-northeast-1
+    register: stop
+
+  - debug: msg='{{stop}}'

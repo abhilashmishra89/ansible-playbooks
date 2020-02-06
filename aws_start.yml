@@ -1,0 +1,13 @@
+---
+- name: start my jenkins server on aws
+  hosts: localhost
+  tasks:
+  - name: start aws instance
+    ec2:
+      instance_ids:
+      - 'i-0d06fcd37e5c0137b'
+      state: running 
+      region: ap-northeast-1
+    register: start
+
+  - debug: msg='{{start}}'
