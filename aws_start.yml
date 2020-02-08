@@ -9,5 +9,4 @@
       state: running 
       region: ap-northeast-1
     register: start
-
   - debug: msg='{{start}}'
